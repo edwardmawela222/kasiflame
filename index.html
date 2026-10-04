@@ -3,10 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KASI-FLAME</title>
+  <title>KASI-FLAME | Kasi Food Delivery in Makhuduthamaga</title>
+  <meta name="description" content="Affordable flame-grilled kasi meals with fast delivery in the Makhuduthamaga Municipality area. Order pap and wors, roast chicken, boerewors rolls and more on WhatsApp.">
+  <meta name="theme-color" content="#050505">
+  <link rel="canonical" href="https://www.kasiflame.online/">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <!-- Social sharing (WhatsApp, Facebook, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.kasiflame.online/">
+  <meta property="og:title" content="KASI-FLAME | Good Food. Good Vibes. Great Flame.">
+  <meta property="og:description" content="Affordable flame-grilled kasi meals with fast delivery in Makhuduthamaga. Order on WhatsApp.">
+  <meta property="og:image" content="https://www.kasiflame.online/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "KASI-FLAME",
+    "url": "https://www.kasiflame.online/",
+    "logo": "https://www.kasiflame.online/assets/images/logo.png",
+    "image": "https://www.kasiflame.online/assets/images/og-image.jpg",
+    "telephone": "+27663995798",
+    "servesCuisine": "South African",
+    "priceRange": "R",
+    "areaServed": "Makhuduthamaga Local Municipality, Limpopo"
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -51,6 +84,11 @@
 
     button{
       font-family:'Montserrat',sans-serif;
+    }
+
+    :focus-visible{
+      outline:2px solid var(--orange);
+      outline-offset:3px;
     }
 
     /* NAV */
@@ -112,7 +150,11 @@
       gap:28px;
     }
 
-    .nav-links a{
+    .nav-links a,
+    .nav-links button{
+      background:none;
+      border:none;
+      cursor:pointer;
       font-size:14px;
       font-weight:700;
       text-transform:uppercase;
@@ -120,7 +162,8 @@
       transition:.2s ease;
     }
 
-    .nav-links a:hover{
+    .nav-links a:hover,
+    .nav-links button:hover{
       color:var(--orange);
     }
 
@@ -145,8 +188,9 @@
       inset:0;
 
       background:
-      linear-gradient(rgba(0,0,0,.82), rgba(0,0,0,.88)),
-      url('assets/images/hero-bg.jpg') center/cover no-repeat;
+      radial-gradient(ellipse at 50% 110%, rgba(255,106,0,.28), transparent 60%),
+      radial-gradient(ellipse at 50% 0%, rgba(255,106,0,.08), transparent 55%),
+      var(--black);
 
       z-index:-1;
     }
@@ -333,12 +377,19 @@
       background:var(--orange-hover);
     }
 
+    .card button.added{
+      background:#1f8f4e;
+    }
+
     /* FLOATING CART */
 
     .floating-cart{
       position:fixed;
       right:20px;
       bottom:20px;
+
+      border:none;
+      box-shadow:0 8px 24px rgba(0,0,0,.5);
 
       background:var(--orange);
 
@@ -374,6 +425,8 @@
     .cart-box{
       width:100%;
       max-width:560px;
+      max-height:calc(100vh - 40px);
+      overflow-y:auto;
 
       background:#0e0e0e;
 
@@ -541,6 +594,45 @@
       color:var(--orange);
     }
 
+    .whatsapp-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* TOAST */
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:84px;
+      transform:translate(-50%,20px);
+
+      background:#1a1a1a;
+      border:1px solid var(--orange);
+      color:#fff;
+
+      padding:12px 18px;
+
+      font-size:14px;
+      font-weight:600;
+
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+
+      z-index:1002;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{ scroll-behavior:auto; }
+      *{ transition:none !important; }
+    }
+
     /* FOOTER */
 
     footer{
@@ -608,6 +700,23 @@
       }
     }
 
+    @media(max-width:480px){
+
+      .nav-logo{
+        width:48px;
+        height:48px;
+      }
+
+      .brand-text h2{
+        font-size:26px;
+      }
+
+      .cart-item{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
   </style>
 </head>
 
@@ -620,14 +729,15 @@
     <a href="#" class="brand">
 
       <img
-        src="assets/images/logo.png"
+        src="assets/images/logo-160.webp"
         class="nav-logo"
         alt="KASI-FLAME Logo"
+        width="60"
+        height="60"
       >
 
       <div class="brand-text">
         <h2>KASI-FLAME</h2>
-        <p> </p>
         <span>Est. 2026 </span>
       </div>
 
@@ -635,7 +745,7 @@
 
     <div class="nav-links">
       <a href="#menu">Menu</a>
-      <a href="#" onclick="toggleCart()">Cart</a>
+      <button type="button" onclick="openCart()">Cart</button>
     </div>
 
   </nav>
@@ -670,6 +780,8 @@
         <a
           href="https://wa.me/27663995798"
           class="btn btn-secondary"
+          target="_blank"
+          rel="noopener"
         >
           WhatsApp Us
         </a>
@@ -695,17 +807,19 @@
 
   <!-- FLOATING CART -->
 
-  <div class="floating-cart" onclick="toggleCart()">
+  <button type="button" class="floating-cart" onclick="openCart()" aria-label="Open cart">
     🛒 Cart (<span id="cartCount">0</span>)
-  </div>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <!-- CART -->
 
-  <div class="cart-modal" id="cartModal">
+  <div class="cart-modal" id="cartModal" onclick="if(event.target === this) closeCart()">
 
-    <div class="cart-box">
+    <div class="cart-box" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
 
-      <h2>Your Order</h2>
+      <h2 id="cartTitle">Your Order</h2>
 
       <div id="cartItems"></div>
 
@@ -722,15 +836,18 @@
       <div class="cart-actions">
 
         <button
+          type="button"
           class="whatsapp-btn"
+          id="sendOrderBtn"
           onclick="checkoutWhatsapp()"
         >
-          Send Order
+          Send Order via WhatsApp
         </button>
 
         <button
+          type="button"
           class="close-btn"
-          onclick="toggleCart()"
+          onclick="closeCart()"
         >
           Close
         </button>
@@ -749,7 +866,8 @@
 
     <p>
       www.kasiflame.online<br>
-      +27 66 399 5798
+      <a href="tel:+27663995798">+27 66 399 5798</a><br>
+      &copy; <span id="year">2026</span> KASI-FLAME
     </p>
 
   </footer>
@@ -769,14 +887,14 @@ const products = [
     id:2,
     name:'Pap and Wors Meaty Special',
     price:150,
-    image:'assets/images/worsnpapa.webp'
+    image:'assets/images/worsnpapa-600.webp'
   },
 
   {
     id:3,
     name:'Boerewors Roll (25% OFF for Students)',
     price:35,
-    image:'assets/images/boerie.png'
+    image:'assets/images/boerie.webp'
   },
 
   {
@@ -809,7 +927,54 @@ const products = [
 
 ];
 
-let cart = [];
+const PHONE = '27663995798';
+const CART_KEY = 'kasiflame-cart';
+
+let cart = loadCart();
+
+/* SAVED CART (survives page refresh) */
+
+function loadCart(){
+
+  try{
+    const saved = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+
+    // Rebuild from the current menu so prices and names are always up to date
+    return saved
+      .map(({id, qty}) => {
+        const product = products.find(p => p.id === id);
+        return product && qty > 0 ? {...product, qty} : null;
+      })
+      .filter(Boolean);
+  }catch(e){
+    return [];
+  }
+}
+
+function saveCart(){
+
+  try{
+    localStorage.setItem(
+      CART_KEY,
+      JSON.stringify(cart.map(({id, qty}) => ({id, qty})))
+    );
+  }catch(e){}
+}
+
+/* TOAST */
+
+let toastTimer;
+
+function showToast(text){
+
+  const toast = document.getElementById('toast');
+
+  toast.textContent = text;
+  toast.classList.add('show');
+
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+}
 
 /* RENDER PRODUCTS */
 
@@ -824,6 +989,8 @@ function renderProducts(){
       <img
         src="${product.image}"
         alt="${product.name}"
+        loading="lazy"
+        decoding="async"
       >
 
       <div class="card-content">
@@ -834,7 +1001,7 @@ function renderProducts(){
           R${product.price.toFixed(2)}
         </div>
 
-        <button onclick="addToCart(${product.id})">
+        <button type="button" onclick="addToCart(${product.id}, this)">
           ADD TO CART
         </button>
 
@@ -847,7 +1014,7 @@ function renderProducts(){
 
 /* ADD TO CART */
 
-function addToCart(id){
+function addToCart(id, button){
 
   const product = products.find(p => p.id === id);
 
@@ -863,6 +1030,18 @@ function addToCart(id){
   }
 
   updateCart();
+
+  showToast(`${product.name} added to cart`);
+
+  if(button){
+    button.textContent = 'ADDED ✓';
+    button.classList.add('added');
+
+    setTimeout(() => {
+      button.textContent = 'ADD TO CART';
+      button.classList.remove('added');
+    }, 1200);
+  }
 }
 
 /* INCREASE */
@@ -943,7 +1122,9 @@ function updateCart(){
         <div class="cart-controls">
 
           <button
+            type="button"
             class="qty-btn"
+            aria-label="Remove one ${item.name}"
             onclick="decreaseQty(${item.id})"
           >
             -
@@ -952,13 +1133,16 @@ function updateCart(){
           <span>${item.qty}</span>
 
           <button
+            type="button"
             class="qty-btn"
+            aria-label="Add one more ${item.name}"
             onclick="increaseQty(${item.id})"
           >
             +
           </button>
 
           <button
+            type="button"
             class="remove-btn"
             onclick="removeItem(${item.id})"
           >
@@ -978,19 +1162,29 @@ function updateCart(){
 
   document.getElementById('cartTotal').textContent =
   total.toFixed(2);
+
+  document.getElementById('sendOrderBtn').disabled = cart.length === 0;
+
+  saveCart();
 }
 
-/* TOGGLE CART */
+/* OPEN / CLOSE CART */
 
-function toggleCart(){
+function openCart(){
 
-  const modal = document.getElementById('cartModal');
-
-  modal.style.display =
-  modal.style.display === 'flex'
-  ? 'none'
-  : 'flex';
+  document.getElementById('cartModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
+
+function closeCart(){
+
+  document.getElementById('cartModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeCart();
+});
 
 /* CHECKOUT */
 
@@ -998,14 +1192,14 @@ function checkoutWhatsapp(){
 
   if(cart.length === 0) return;
 
-  let message = 'KASI-FLAME ORDER%0A%0A';
+  let message = 'KASI-FLAME ORDER\n\n';
 
   let total = 0;
 
   cart.forEach(item => {
 
     message +=
-    `${item.qty}x ${item.name} - R${(item.price * item.qty).toFixed(2)}%0A`;
+    `${item.qty}x ${item.name} - R${(item.price * item.qty).toFixed(2)}\n`;
 
     total += item.price * item.qty;
 
@@ -1014,23 +1208,25 @@ function checkoutWhatsapp(){
   const notes =
   document.getElementById('orderNotes').value;
 
-  message += `%0ATotal: R${total.toFixed(2)}`;
+  message += `\nTotal: R${total.toFixed(2)}`;
 
   if(notes.trim() !== ''){
 
-    message += `%0A%0ANotes:%0A${notes}`;
+    message += `\n\nNotes:\n${notes.trim()}`;
 
   }
 
-  const phone = '27663995798';
-
+  // Encode the whole message so characters like & # + in item names or notes
+  // don't cut the WhatsApp message short
   window.open(
-    `https://wa.me/${phone}?text=${message}`,
+    `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`,
     '_blank'
   );
 }
 
 /* INIT */
+
+document.getElementById('year').textContent = new Date().getFullYear();
 
 renderProducts();
 updateCart();
